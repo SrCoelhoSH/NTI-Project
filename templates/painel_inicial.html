@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Administrar Usuários</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Estilos para a barra de navegação lateral */
+        .sidenav {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: -250px;
+            background-color: #333;
+            overflow-x: hidden;
+            transition: 0.3s ease;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 15px 25px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+        }
+
+        .sidenav a:hover {
+            background-color: #45a049;
+            color: white;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 30px;
+        }
+
+        .sidenav.open {
+            left: 0;
+        }
+
+        /* Estilos para o botão de logout */
+        .logout-btn {
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 10px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Estilos para o conteúdo principal */
+        .content {
+            margin-left: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            text-align: center;
+            font-size: 18px;
+            color: #666;
+        }
+
+        /* Estilos para o botão de abertura da barra lateral */
+        .menu-btn {
+            font-size: 30px;
+            cursor: pointer;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            color: white;
+            z-index: 2;
+        }
+
+        /* Estilos para a barra de navegação lateral em dispositivos móveis */
+        @media screen and (max-width: 768px) {
+            .sidenav {
+                width: 100%;
+                left: -100%;
+                padding-top: 0;
+            }
+
+            .sidenav.open {
+                left: 0;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Botão de abertura da barra lateral em dispositivos móveis -->
+    <span class="menu-btn" onclick="toggleNav()">&#9776;</span>
+
+    <!-- Barra de navegação lateral -->
+    <div class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times;</a>
+        <a href="javascript:void(0)" onclick="loadRoute('/estoque')">Registro de Manutenção</a>
+        <a href="javascript:void(0)" onclick="loadRoute('/grafico')">Grafico</a>
+        <a href="javascript:void(0)" onclick="loadRoute('/estoque_panel')">Painel de Exibição</a>
+        <a href="javascript:void(0)" onclick="loadRoute('/registromouseteclado')">Formulario de Teclado e Mouse</a>
+        {% if session['is_admin'] %}
+            <a href="javascript:void(0)" onclick="loadRoute('/controle_de_estoque')">Controle De Estoque</a>
+            <a href="javascript:void(0)" onclick="loadRoute('/conceder_admin')">Administrar Usuários</a>
+            <a href="javascript:void(0)" onclick="loadRoute('/painel_usuario')">Painel de Usuarios</a>
+            <a href="javascript:void(0)" onclick="loadRoute('/painel_inventario')">Controle De Inventário</a>
+            <a href="javascript:void(0)" onclick="loadRoute('/painelmouseteclado')">Formulario de Teclado e Mouse</a>
+        {% endif %}
+        
+    </div>
+    
+    <!-- Botão de logout -->
+    <button class="logout-btn" onclick="logout()">Logout</button>
+
+    <!-- Conteúdo principal -->
+    <div class="content">
+        <h1 class="animate__animated animate__fadeIn">Controle NTI</h1>
+        <p class="animate__animated animate__fadeIn">Seja bem vindo</p>
+        <!-- Div para carregar o conteúdo da rota -->
+        <div id="dynamic-content">
+            <!-- O conteúdo das rotas será carregado aqui -->
+        </div>
+    </div>
+
+    <script>
+        function toggleNav() {
+            const sidenav = document.querySelector(".sidenav");
+            sidenav.classList.toggle("open");
+            const menuBtn = document.querySelector(".menu-btn");
+            menuBtn.innerHTML = sidenav.classList.contains("open") ? "&#10006;" : "&#9776;";
+        }
+
+        function loadRoute(route) {
+            // Usar a API history para modificar a URL sem recarregar a página
+            window.history.pushState({}, '', route);
+        
+            fetch(route)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("dynamic-content").innerHTML = data;
+                    toggleNav(); // Fechar a barra lateral após carregar a rota
+                })
+                .catch(error => {
+                    console.error('Erro na requisição:', error);
+                    alert("Erro ao carregar a rota. Tente novamente.");
+                });
+        }
+
+        // Lidar com eventos de navegação do navegador para atualizar a rota
+        window.onpopstate = function(event) {
+            const currentPath = window.location.pathname;
+            loadRoute(currentPath);
+        }
+
+        function logout() {
+            // Fazer uma requisição para a rota de logout no Flask
+            fetch('/logout', { method: 'GET' })
+                .then(response => {
+                    if (response.redirected) {
+                        // Redirecionar para a página de login após o logout
+                        window.location.href = response.url;
+                    } else {
+                        // Exibir uma mensagem de erro em caso de falha no logout
+                        alert("Erro ao fazer logout. Tente novamente.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro na requisição:', error);
+                    alert("Erro ao fazer logout. Tente novamente.");
+                });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Painel de Administração</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Adicione o link para o Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Estilos personalizados podem ser adicionados aqui, se necessário */
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h1 class="text-center my-4">Painel de Administração</h1>
+        
+        <div class="text-center mb-4">
+            <a class="btn btn-primary" href="/painel_inicial">Voltar para Tela Inicial</a>
+        </div>
+
+        <div class="row">
+            <!-- Painel Manutenção com Peças Utilizadas -->
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        Manutenção com Peças Utilizadas
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Manutenção</th>
+                                    <th>Peças</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Manutenção 1</td>
+                                    <td>Placa-Mãe, Processador, Memória RAM</td>
+                                </tr>
+                                <tr>
+                                    <td>Manutenção 2</td>
+                                    <td>Fonte, Coolers, Gabinete</td>
+                                </tr>
+                                <!-- Adicione mais linhas com dados reais aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gráfico de barras para status de Manutenção -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        Status de Manutenção
+                    </div>
+                    <div class="card-body">
+                        <canvas id="statusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <!-- Painel Estoque -->
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        Estoque
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Funcionário</th>
+                                    <th>Item</th>
+                                    <th>Quantidade</th>
+                                    <th>Série</th>
+                                    <th>Marca</th>
+                                    <th>Modelo</th>
+                                    <th>Lote</th>
+                                    <th>Abertura</th>
+                                    <th>Finalização</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Funcionário 1</td>
+                                    <td>Item 1</td>
+                                    <td>10</td>
+                                    <td>S/N 12345</td>
+                                    <td>Marca A</td>
+                                    <td>Modelo X</td>
+                                    <td>Lote 001</td>
+                                    <td>01/09/2023</td>
+                                    <td>05/09/2023</td>
+                                </tr>
+                                <tr>
+                                    <td>Funcionário 2</td>
+                                    <td>Item 2</td>
+                                    <td>5</td>
+                                    <td>S/N 67890</td>
+                                    <td>Marca B</td>
+                                    <td>Modelo Y</td>
+                                    <td>Lote 002</td>
+                                    <td>02/09/2023</td>
+                                    <td>06/09/2023</td>
+                                </tr>
+                                <!-- Adicione mais linhas com dados reais aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gráfico de pizza para tipos de itens -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Tipos de Itens
+                    </div>
+                    <div class="card-body">
+                        <canvas id="tipoItemChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <!-- Painel de Rank de Técnicos -->
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        Rank de Técnicos
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Técnico</th>
+                                    <th>Manutenções</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Técnico 1</td>
+                                    <td>15</td>
+                                </tr>
+                                <tr>
+                                    <td>Técnico 2</td>
+                                    <td>12</td>
+                                </tr>
+                                <!-- Adicione mais linhas com dados reais aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Script para criar gráficos -->
+    <script>
+        // Dados para o gráfico de barras de status (exemplo)
+        const statusData = {
+            labels: ['Concluído', 'Andamento', 'Pendente'],
+            datasets: [{
+                label: 'Status',
+                data: [12, 5, 3], // Substitua com seus dados reais
+                backgroundColor: [
+                    'rgba(75, 192, 50, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(255, 99, 132, 0.7)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 50, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // Dados para o gráfico de pizza de tipos de itens (exemplo)
+        const tipoItemData = {
+            labels: ['Item 1', 'Item 2', 'Item 3'],
+            datasets: [{
+                data: [30, 25, 20], // Substitua com seus dados reais
+                backgroundColor: [
+                    'rgba(75, 192, 50, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(255, 99, 132, 0.7)'
+                ]
+            }]
+        };
+
+        // Configuração dos gráficos
+        const statusCtx = document.getElementById('statusChart').getContext('2d');
+        const tipoItemCtx = document.getElementById('tipoItemChart').getContext('2d');
+
+        const statusChart = new Chart(statusCtx, {
+            type: 'bar',
+            data: statusData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const tipoItemChart = new Chart(tipoItemCtx, {
+            type: 'pie',
+            data: tipoItemData
+        });
+    </script>
+</body>
+</html>

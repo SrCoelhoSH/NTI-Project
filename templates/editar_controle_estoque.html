@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="PT-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Item de Controle de Estoque</title>
+</head>
+<body>
+    <h1>Editar Item de Controle de Estoque</h1>
+    
+    <form method="POST">
+        <label for="item_type">Tipo de Item:</label>
+        <input type="text" id="item_type" name="item_type" value="{{ item.item_type }}" required>
+        <br>
+
+        <label for="item_quantity">Quantidade:</label>
+        <input type="number" id="item_quantity" name="item_quantity" value="{{ item.item_quantity }}" required>
+        <br>
+
+        <label for="serial_number">Número de Série:</label>
+        <input type="text" id="serial_number" name="serial_number" value="{{ items.serial_number }}" required>
+        <br>
+
+        <label for="marca_text">Marca:</label>
+        <input type="text" id="marca_text" name="marca_text" value="{{ item.marca_text }}" required>
+        <br>
+
+        <label for="modelo_text">Modelo:</label>
+        <input type="text" id="modelo_text" name="modelo_text" value="{{ item.modelo_text }}" required>
+        <br>
+
+        <label for="lote_text">Lote:</label>
+        <input type="text" id="lote_text" name="lote_text" value="{{ item.lote_text }}" required>
+        <br>
+
+        <label for="data_abriu">Data de Abertura:</label>
+        <input type="text" id="data_abriu" name="data_abriu" value="{{ item.data_abriu }}" required>
+        <br>
+
+        <label for="data_fechou">Data de Fechamento:</label>
+        <input type="text" id="data_fechou" name="data_fechou" value="{{ item.data_fechou }}" required>
+        <br>
+
+        <input type="submit" value="Salvar Alterações">
+    </form>
+
+    <a href="/controle_de_estoque">Voltar para Controle de Estoque</a>
+</body>
+</html>

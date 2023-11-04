@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+            margin: 10px;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        form input[type="date"],
+        form input[type="text"],
+        form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        form input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        /* Styles for the select element */
+        .table-size-select {
+            display: block;
+            width: 100px;
+            margin: 10px auto;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        /* Responsiveness for smaller screens */
+        @media screen and (max-width: 600px) {
+            form input[type="date"],
+            form input[type="text"],
+            form select {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+            .table-size-select {
+                width: 100%;
+                margin: 10px 0;
+            }
+
+            table {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Estoque</h1>
+    <a class="button" href="/painel_inicial">Voltar para tela inicial</a>
+
+    <form method="POST" action="/estoque">
+        <label for="data_entrada">Data de Entrada:</label>
+        <input type="date" id="data_entrada" name="data_entrada" required>
+
+        <label for="tombo">Tombo:</label>
+        <input type="text" id="tombo" name="tombo" required>
+
+        <label for="serie">Série:</label>
+        <input type="text" id="serie" name="serie" required>
+
+        <label for="setor">Setor:</label>
+        <input type="text" id="setor" name="setor" required>
+
+        <label for="tecnico_responsavel">Técnico Responsável:</label>
+        <input type="text" id="tecnico_responsavel" name="tecnico_responsavel" value="{{ session['username'] }}" readonly required>
+
+        <label for="descricao">Descrição:</label>
+        <input type="text" id="descricao" name="descricao" required>
+        
+        <label for="peca_utilizada1">Peça que Utilizou 1:</label>
+        <select id="peca_utilizada1" name="peca_utilizada1">
+            <option value=""></option>
+            <option value="Placa-mae">Placa-mãe</option>
+            <option value="Processador_I5_4400">Processador I5 4400</option>
+            <option value="Processador_Ryzen_5_3400G">Processador Ryzen 5 3400G</option>
+            <option value="Processador_Petium_Gold_460">Processador Petium Gold 460</option>
+            <option value="Memoria-Ram_DDR3_2GB">Memoria-Ram DDR3 2GB</option>
+            <option value="Memoria-Ram_DDR3_4GB">Memoria-Ram DDR3 4GB</option>
+            <option value="Memoria-Ram_DDR3_8GB">Memoria-Ram DDR3 8GB</option>
+            <option value="Memoria-Ram_DDR4_4GB">Memoria-Ram DDR4 4GB</option>
+            <option value="Memoria-Ram_DDR4_8GB">Memoria-Ram DDR4 8GB</option>
+            <option value="SSD_120GB">SSD 120GB</option>
+            <option value="SSD_240GB">SSD 240GB</option>
+            <option value="SSD_480GB">SSD 480GB</option>
+            <option value="SSD_NVME_120GB">SSD NVME 120GB</option>
+            <option value="SSD_NVME_240GB">SSD NVME 240GB</option>
+            <option value="SSD_NVME_480GB">SSD NVME 480GB</option>
+            <option value="HD_320GB">HD 320GB</option>
+            <option value="HD_500GB">HD 500GB</option>
+            <option value="HD_700GB">HD 700GB</option>
+            <option value="HD_1Terabyte">HD 1Terabyte</option>
+            <option value="Fonte_480W">Fonte 480W</option>
+            <option value="Cooler_Soquete_1150">Cooler Soquete 1150 Para Intel</option>
+            <option value="Cooler_Soquete_AM4">Cooler Soquete AM4 Para AMD</option>
+            <option value="Placa_de_Rede_1150">Placa de Rede 1150 Intel</option>
+            <option value="Placa_de_Rede_AM4">Placa de Rede AM4 AMD</option>
+            <option value="Teclado">Teclado</option>
+            <option value="Mouse">Mouse</option>
+            <option value="Monitor">Monitor</option>
+            <option value="Cabo_VGA">Cabo VGA</option>
+            <option value="Cabo_HDMI">Cabo HDMI</option>
+            <option value="Cabo_de_Força">Cabo de Força</option>
+        </select><br><br>
+        
+        <label for="quantidade1">Quantidade ou Serial 1:</label>
+        <input type="text" id="quantidade1" name="quantidade1">
+        
+        <label for="peca_utilizada2">Peça que Utilizou 2:</label>
+        <select id="peca_utilizada2" name="peca_utilizada2">
+            <option value=""></option>
+            <option value="Placa-mae">Placa-mãe</option>
+            <option value="Processador_I5_4400">Processador I5 4400</option>
+            <option value="Processador_Ryzen_5_3400G">Processador Ryzen 5 3400G</option>
+            <option value="Processador_Petium_Gold_460">Processador Petium Gold 460</option>
+            <option value="Memoria-Ram_DDR3_2GB">Memoria-Ram DDR3 2GB</option>
+            <option value="Memoria-Ram_DDR3_4GB">Memoria-Ram DDR3 4GB</option>
+            <option value="Memoria-Ram_DDR3_8GB">Memoria-Ram DDR3 8GB</option>
+            <option value="Memoria-Ram_DDR4_4GB">Memoria-Ram DDR4 4GB</option>
+            <option value="Memoria-Ram_DDR4_8GB">Memoria-Ram DDR4 8GB</option>
+            <option value="SSD_120GB">SSD 120GB</option>
+            <option value="SSD_240GB">SSD 240GB</option>
+            <option value="SSD_480GB">SSD 480GB</option>
+            <option value="SSD_NVME_120GB">SSD NVME 120GB</option>
+            <option value="SSD_NVME_240GB">SSD NVME 240GB</option>
+            <option value="SSD_NVME_480GB">SSD NVME 480GB</option>
+            <option value="HD_320GB">HD 320GB</option>
+            <option value="HD_500GB">HD 500GB</option>
+            <option value="HD_700GB">HD 700GB</option>
+            <option value="HD_1Terabyte">HD 1Terabyte</option>
+            <option value="Fonte_480W">Fonte 480W</option>
+            <option value="Cooler_Soquete_1150">Cooler Soquete 1150 Para Intel</option>
+            <option value="Cooler_Soquete_AM4">Cooler Soquete AM4 Para AMD</option>
+            <option value="Placa_de_Rede_1150">Placa de Rede 1150 Intel</option>
+            <option value="Placa_de_Rede_AM4">Placa de Rede AM4 AMD</option>
+            <option value="Teclado">Teclado</option>
+            <option value="Mouse">Mouse</option>
+            <option value="Monitor">Monitor</option>
+            <option value="Cabo_VGA">Cabo VGA</option>
+            <option value="Cabo_HDMI">Cabo HDMI</option>
+            <option value="Cabo_de_Força">Cabo de Força</option>
+        </select><br><br>
+        
+        <label for="quantidade2">Quantidade ou Serial 2:</label>
+        <input type="text" id="quantidade2" name="quantidade2">
+
+        <label for="peca_utilizada3">Peça que Utilizou 3:</label>
+        <select id="peca_utilizada3" name="peca_utilizada3">
+            <option value=""></option>
+            <option value="Placa-mae">Placa-mãe</option>
+            <option value="Processador_I5_4400">Processador I5 4400</option>
+            <option value="Processador_Ryzen_5_3400G">Processador Ryzen 5 3400G</option>
+            <option value="Processador_Petium_Gold_460">Processador Petium Gold 460</option>
+            <option value="Memoria-Ram_DDR3_2GB">Memoria-Ram DDR3 2GB</option>
+            <option value="Memoria-Ram_DDR3_4GB">Memoria-Ram DDR3 4GB</option>
+            <option value="Memoria-Ram_DDR3_8GB">Memoria-Ram DDR3 8GB</option>
+            <option value="Memoria-Ram_DDR4_4GB">Memoria-Ram DDR4 4GB</option>
+            <option value="Memoria-Ram_DDR4_8GB">Memoria-Ram DDR4 8GB</option>
+            <option value="SSD_120GB">SSD 120GB</option>
+            <option value="SSD_240GB">SSD 240GB</option>
+            <option value="SSD_480GB">SSD 480GB</option>
+            <option value="SSD_NVME_120GB">SSD NVME 120GB</option>
+            <option value="SSD_NVME_240GB">SSD NVME 240GB</option>
+            <option value="SSD_NVME_480GB">SSD NVME 480GB</option>
+            <option value="HD_320GB">HD 320GB</option>
+            <option value="HD_500GB">HD 500GB</option>
+            <option value="HD_700GB">HD 700GB</option>
+            <option value="HD_1Terabyte">HD 1Terabyte</option>
+            <option value="Fonte_480W">Fonte 480W</option>
+            <option value="Cooler_Soquete_1150">Cooler Soquete 1150 Para Intel</option>
+            <option value="Cooler_Soquete_AM4">Cooler Soquete AM4 Para AMD</option>
+            <option value="Placa_de_Rede_1150">Placa de Rede 1150 Intel</option>
+            <option value="Placa_de_Rede_AM4">Placa de Rede AM4 AMD</option>
+            <option value="Teclado">Teclado</option>
+            <option value="Mouse">Mouse</option>
+            <option value="Monitor">Monitor</option>
+            <option value="Cabo_VGA">Cabo VGA</option>
+            <option value="Cabo_HDMI">Cabo HDMI</option>
+            <option value="Cabo_de_Força">Cabo de Força</option>
+        </select><br><br>
+       
+        <label for="quantidade3">Quantidade ou Serial 3:</label>
+        <input type="text" id="quantidade3" name="quantidade3">
+       
+        <label for="peca_utilizada4">Peça que Utilizou 4:</label>
+        <select id="peca_utilizada4" name="peca_utilizada4">
+            <option value=""></option>
+            <option value="Placa-mae">Placa-mãe</option>
+            <option value="Processador_I5_4400">Processador I5 4400</option>
+            <option value="Processador_Ryzen_5_3400G">Processador Ryzen 5 3400G</option>
+            <option value="Processador_Petium_Gold_460">Processador Petium Gold 460</option>
+            <option value="Memoria-Ram_DDR3_2GB">Memoria-Ram DDR3 2GB</option>
+            <option value="Memoria-Ram_DDR3_4GB">Memoria-Ram DDR3 4GB</option>
+            <option value="Memoria-Ram_DDR3_8GB">Memoria-Ram DDR3 8GB</option>
+            <option value="Memoria-Ram_DDR4_4GB">Memoria-Ram DDR4 4GB</option>
+            <option value="Memoria-Ram_DDR4_8GB">Memoria-Ram DDR4 8GB</option>
+            <option value="SSD_120GB">SSD 120GB</option>
+            <option value="SSD_240GB">SSD 240GB</option>
+            <option value="SSD_480GB">SSD 480GB</option>
+            <option value="SSD_NVME_120GB">SSD NVME 120GB</option>
+            <option value="SSD_NVME_240GB">SSD NVME 240GB</option>
+            <option value="SSD_NVME_480GB">SSD NVME 480GB</option>
+            <option value="HD_320GB">HD 320GB</option>
+            <option value="HD_500GB">HD 500GB</option>
+            <option value="HD_700GB">HD 700GB</option>
+            <option value="HD_1Terabyte">HD 1Terabyte</option>
+            <option value="Fonte_480W">Fonte 480W</option>
+            <option value="Cooler_Soquete_1150">Cooler Soquete 1150 Para Intel</option>
+            <option value="Cooler_Soquete_AM4">Cooler Soquete AM4 Para AMD</option>
+            <option value="Placa_de_Rede_1150">Placa de Rede 1150 Intel</option>
+            <option value="Placa_de_Rede_AM4">Placa de Rede AM4 AMD</option>
+            <option value="Teclado">Teclado</option>
+            <option value="Mouse">Mouse</option>
+            <option value="Monitor">Monitor</option>
+            <option value="Cabo_VGA">Cabo VGA</option>
+            <option value="Cabo_HDMI">Cabo HDMI</option>
+            <option value="Cabo_de_Força">Cabo de Força</option>
+        </select><br><br>
+       
+        <label for="quantidade4">Quantidade ou Serial 4:</label>
+        <input type="text" id="quantidade4" name="quantidade4">
+       
+        
+        <select id="status" name="status">Status:</label>
+            <option value="Testando">Testando</option>
+            <option value="Defeito">Defeito</option>
+            <option value="Solucionado">Solucionado</option>
+            <option value="Substituído">Substituído</option>
+        </select>
+
+        <label for="data_saida">Data de Saída:</label>
+        <input type="date" id="data_saida" name="data_saida">
+
+        <input class="button" type="submit" value="Adicionar">
+    </form>
+
+    <label for="table-size" style="display: block; text-align: center;">Número de Linhas:</label>
+    <select class="table-size-select" id="table-size" name="table-size" onchange="updateTableSize()">
+        
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+        <option value="60">60</option>
+        <option value="70">70</option>
+        <option value="80">80</option>
+        <option value="90">90</option>
+        <option value="100">100</option>
+        <option value="150">150</option>
+        <option value="250">250</option>
+        <option value="500">500</option>
+        <option value="999">999</option>
+    </select>
+
+    <table id="table">
+        <tr>
+            <th>Data de Entrada</th>
+            <th>Tombo</th>
+            <th>Série</th>
+            <th>Setor</th>
+            <th>Técnico Responsável</th>
+            <th>Descrição</th>
+            <th>Peça Utilizada1</th>
+            <th>Peça Q/S 1</th>
+            <th>Peça Utilizada2</th>
+            <th>Peça Q/S 2</th>
+            <th>Peça Utilizada3</th>
+            <th>Peça Q/S 3</th>
+            <th>Peça Utilizada4</th>
+            <th>Peça Q/S 4</th>
+            <th>Status</th>
+            <th>Data de Saída</th>
+            <th>Ação</th>
+        </tr>
+
+        {% for item in estoque %}
+        <tr>
+            <td>{{ item['data_entrada'] }}</td>
+            <td>{{ item['tombo'] }}</td>
+            <td>{{ item['serie'] }}</td>
+            <td>{{ item['setor'] }}</td>
+            <td>{{ item['tecnico_responsavel'] }}</td>
+            <td>{{ item['descricao'] }}</td>
+            <td>{{ item['peca_utilizada1'] }}</td>
+            <td>{{ item['quantidade1'] }}</td>
+            <td>{{ item['peca_utilizada2'] }}</td>
+            <td>{{ item['quantidade2'] }}</td>
+            <td>{{ item['peca_utilizada3'] }}</td>
+            <td>{{ item['quantidade3'] }}</td>
+            <td>{{ item['peca_utilizada4'] }}</td>
+            <td>{{ item['quantidade4'] }}</td>
+            <td>{{ item['status'] }}</td>
+            <td>{{ item['data_saida'] }}</td>
+            <td>
+                <a class="button" href="/editar/{{ item['id'] }}">Editar</a>
+                {% if session['is_admin'] %}
+                    <a class="button" href="/excluir/{{ item['id'] }}">Excluir</a>
+                {% endif %}
+                <button onclick="filterTable()">Filtrar</button>
+
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <script>
+        function updateTableSize() {
+            var tableSize = document.getElementById("table-size").value;
+            var tableRows = document.querySelectorAll("#table tr");
+
+            for (var i = 1; i < tableRows.length; i++) {
+                if (i <= tableSize) {
+                    tableRows[i].style.display = "table-row";
+                } else {
+                    tableRows[i].style.display = "none";
+                    function filterTable() {
+                        var tableRows = document.querySelectorAll("#table tr");
+                        var startDate = document.getElementById("start-date").value;
+                        var endDate = document.getElementById("end-date").value.toLowerCase();
+                        var searchInput = document.getElementById("search-input").value.toLowerCase();
+                    
+                        for (var i = 1; i < tableRows.length; i++) {
+                            var row = tableRows[i];
+                            var date = row.cells[0].textContent;
+                            var searchText = row.textContent.toLowerCase();
+                    
+                            if ((startDate === "" || date >= startDate) && (endDate === "" || date <= endDate) && (searchText.includes(searchInput))) {
+                                row.style.display = "table-row";
+                            } else {
+                                row.style.display = "none";       
+               
+                }
+            }
+        }
+
+        // Call the function on page load to set the initial table size
+        updateTableSize();
+    </script>
+    
+</body>
+</html>

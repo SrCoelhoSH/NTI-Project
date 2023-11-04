@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Registro</title>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #f0f0f0, #e1e1e1);
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        form input[type="date"],
+        form input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        form input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Editar Registro</h1>
+    <div class="sidebar">
+        <a class="button" href="/painel_inicial">Início</a>
+    </div>
+    <form method="POST">
+        <label for="data_entrada">Data de Entrada:</label>
+        <input type="date" id="data_entrada" name="data_entrada" value="{{ registro.data_entrada }}" required>
+        <br>
+
+        <label for="tombo">Tombo:</label>
+        <input type="text" id="tombo" name="tombo" value="{{ registro.tombo }}" required>
+        <br>
+
+        <label for="serie">Série:</label>
+        <input type="text" id="serie" name="serie" value="{{ registro.serie }}" required>
+        <br>
+
+        <!-- Adicionando o campo "setor" -->
+        <label for="setor">Setor:</label>
+        <input type="text" id="setor" name="setor" value="{{ registro.setor }}" required>
+        <br>
+        <!-- Fim do campo "setor" -->
+
+        <label for="tecnico_responsavel">Técnico Responsável:</label>
+        <input type="text" id="tecnico_responsavel" name="tecnico_responsavel" value="{{ registro.tecnico_responsavel }}" readonly required>
+        <br>
+
+        <label for="descricao">Descrição:</label>
+        <input type="text" id="descricao" name="descricao" value="{{ registro.descricao }}" required>
+        <br>
+
+        <label for="peca_utilizada1">Peça que Utilizou 1:</label>
+        <select id="peca_utilizada1" name="peca_utilizada1">
+            <option value=""></option>
+            <option value="Placa-mae" {% if registro.peca_utilizada1 == 'Placa-mae' %}selected{% endif %}>Placa-mãe</option>
+            <option value="Processador_I5_4400" {% if registro.peca_utilizada1 == 'Processador_I5_4400' %}selected{% endif %}>Processador_I5_4400</option>
+            <option value="Processador_Ryzen_5_3400G" {% if registro.peca_utilizada1 == 'Processador_Ryzen_5_3400G' %}selected{% endif %}>Processador_Ryzen_5_3400G</option>
+            <option value="Processador_Petium_Gold_460" {% if registro.peca_utilizada1 == 'Processador_Petium_Gold_460' %}selected{% endif %}>Processador_Petium_Gold_460</option>
+            <option value="Memoria-Ram_DDR3_2GB" {% if registro.peca_utilizada1 == 'Memoria-Ram_DDR3_2GB' %}selected{% endif %}>Memoria-Ram_DDR3_2GB</option>
+            <option value="Memoria-Ram_DDR3_4GB" {% if registro.peca_utilizada1 == 'Memoria-Ram_DDR3_4GB' %}selected{% endif %}>Memoria-Ram_DDR3_4GB</option>
+            <option value="Memoria-Ram_DDR3_8GB" {% if registro.peca_utilizada1 == 'Memoria-Ram_DDR3_8GB' %}selected{% endif %}>Memoria-Ram_DDR3_8GB</option>
+            <option value="Memoria-Ram_DDR4_4GB" {% if registro.peca_utilizada1 == 'Memoria-Ram_DDR4_4GB' %}selected{% endif %}>Memoria-Ram_DDR4_4GB</option>
+            <option value="Memoria-Ram_DDR4_8GB" {% if registro.peca_utilizada1 == 'Memoria-Ram_DDR4_8GB' %}selected{% endif %}>Memoria-Ram_DDR4_8GB</option>
+            <option value="SSD_120GB" {% if registro.peca_utilizada1 == 'SSD_120GB' %}selected{% endif %}>SSD_120GB</option>
+            <option value="SSD_240GB" {% if registro.peca_utilizada1 == 'SSD_240GB' %}selected{% endif %}>SSD_240GB</option>
+            <option value="SSD_480GB" {% if registro.peca_utilizada1 == 'SSD_480GB' %}selected{% endif %}>SSD_480GB</option>
+            <option value="SSD_NVME_120GB" {% if registro.peca_utilizada1 == 'SSD_NVME_120GB' %}selected{% endif %}>SSD_NVME_120GB</option>
+            <option value="SSD_NVME_240GB" {% if registro.peca_utilizada1 == 'SSD_NVME_240GB' %}selected{% endif %}>SSD_NVME_240GB</option>
+            <option value="SSD_NVSSD_NVME_480GBME_240GB" {% if registro.peca_utilizada1 == 'SSD_NVME_480GB' %}selected{% endif %}>SSD_NVME_480GB</option>
+            <option value="HD_320GB" {% if registro.peca_utilizada1 == 'HD_320GB' %}selected{% endif %}>HD_320GB</option>
+            <option value="HD_500GB" {% if registro.peca_utilizada1 == 'HD_500GB' %}selected{% endif %}>HD_500GB</option>
+            <option value="HD_700GB" {% if registro.peca_utilizada1 == 'HD_700GB' %}selected{% endif %}>HD_700GB</option>
+            <option value="HD_1Terabyte" {% if registro.peca_utilizada1 == 'HD_1Terabyte' %}selected{% endif %}>HD_1Terabyte</option>
+            <option value="Fonte_480W" {% if registro.peca_utilizada1 == 'Fonte_480W' %}selected{% endif %}>Fonte_480W</option>
+            <option value="Cooler_Soquete_1150" {% if registro.peca_utilizada1 == 'Cooler_Soquete_1150' %}selected{% endif %}>Cooler_Soquete_1150</option>
+            <option value="Cooler_Soquete_AM4" {% if registro.peca_utilizada1 == 'Cooler_Soquete_AM4' %}selected{% endif %}>Cooler_Soquete_AM4</option>
+            <option value="Placa_de_Rede_1150" {% if registro.peca_utilizada1 == 'Placa_de_Rede_1150' %}selected{% endif %}>Placa_de_Rede_1150</option>
+            <option value="Placa_de_Rede_AM4" {% if registro.peca_utilizada1 == 'Placa_de_Rede_AM4' %}selected{% endif %}>Placa_de_Rede_AM4</option>
+            <option value="Teclado" {% if registro.peca_utilizada1 == 'Teclado' %}selected{% endif %}>Teclado</option>
+            <option value="Mouse" {% if registro.peca_utilizada1 == 'Mouse' %}selected{% endif %}>Mouse</option>
+            <option value="Monitor" {% if registro.peca_utilizada1 == 'Monitor' %}selected{% endif %}>Monitor</option>
+            <option value="Cabo_VGA" {% if registro.peca_utilizada1 == 'Cabo_VGA' %}selected{% endif %}>Cabo_VGA</option>
+            <option value="Cabo_HDMI" {% if registro.peca_utilizada1 == 'Cabo_HDMI' %}selected{% endif %}>Cabo_HDMI</option>
+            <option value="Cabo_de_Força" {% if registro.peca_utilizada1 == 'Cabo_de_Força' %}selected{% endif %}>Cabo_de_Força</option>
+            
+        </select><br>
+       
+        <label for="quantidade1">Quantidade ou Serial 1:</label>
+        <input type="text" id="quantidade1" name="quantidade1" value="{{ registro.quantidade1 }}" >
+       
+        <label for="peca_utilizada2">Peça que Utilizou 2:</label>
+        <select id="peca_utilizada2" name="peca_utilizada2">
+            <option value=""></option>
+            <option value="Placa-mae" {% if registro.peca_utilizada2 == 'Placa-mae' %}selected{% endif %}>Placa-mãe</option>
+            <option value="Processador_I5_4400" {% if registro.peca_utilizada2 == 'Processador_I5_4400' %}selected{% endif %}>Processador_I5_4400</option>
+            <option value="Processador_Ryzen_5_3400G" {% if registro.peca_utilizada2 == 'Processador_Ryzen_5_3400G' %}selected{% endif %}>Processador_Ryzen_5_3400G</option>
+            <option value="Processador_Petium_Gold_460" {% if registro.peca_utilizada2 == 'Processador_Petium_Gold_460' %}selected{% endif %}>Processador_Petium_Gold_460</option>
+            <option value="Memoria-Ram_DDR3_2GB" {% if registro.peca_utilizada2 == 'Memoria-Ram_DDR3_2GB' %}selected{% endif %}>Memoria-Ram_DDR3_2GB</option>
+            <option value="Memoria-Ram_DDR3_4GB" {% if registro.peca_utilizada2 == 'Memoria-Ram_DDR3_4GB' %}selected{% endif %}>Memoria-Ram_DDR3_4GB</option>
+            <option value="Memoria-Ram_DDR3_8GB" {% if registro.peca_utilizada2 == 'Memoria-Ram_DDR3_8GB' %}selected{% endif %}>Memoria-Ram_DDR3_8GB</option>
+            <option value="Memoria-Ram_DDR4_4GB" {% if registro.peca_utilizada2 == 'Memoria-Ram_DDR4_4GB' %}selected{% endif %}>Memoria-Ram_DDR4_4GB</option>
+            <option value="Memoria-Ram_DDR4_8GB" {% if registro.peca_utilizada2 == 'Memoria-Ram_DDR4_8GB' %}selected{% endif %}>Memoria-Ram_DDR4_8GB</option>
+            <option value="SSD_120GB" {% if registro.peca_utilizada2 == 'SSD_120GB' %}selected{% endif %}>SSD_120GB</option>
+            <option value="SSD_240GB" {% if registro.peca_utilizada2 == 'SSD_240GB' %}selected{% endif %}>SSD_240GB</option>
+            <option value="SSD_480GB" {% if registro.peca_utilizada2 == 'SSD_480GB' %}selected{% endif %}>SSD_480GB</option>
+            <option value="SSD_NVME_120GB" {% if registro.peca_utilizada2 == 'SSD_NVME_120GB' %}selected{% endif %}>SSD_NVME_120GB</option>
+            <option value="SSD_NVME_240GB" {% if registro.peca_utilizada2 == 'SSD_NVME_240GB' %}selected{% endif %}>SSD_NVME_240GB</option>
+            <option value="SSD_NVSSD_NVME_480GBME_240GB" {% if registro.peca_utilizada2 == 'SSD_NVME_480GB' %}selected{% endif %}>SSD_NVME_480GB</option>
+            <option value="HD_320GB" {% if registro.peca_utilizada2 == 'HD_320GB' %}selected{% endif %}>HD_320GB</option>
+            <option value="HD_500GB" {% if registro.peca_utilizada2 == 'HD_500GB' %}selected{% endif %}>HD_500GB</option>
+            <option value="HD_700GB" {% if registro.peca_utilizada2 == 'HD_700GB' %}selected{% endif %}>HD_700GB</option>
+            <option value="HD_1Terabyte" {% if registro.peca_utilizada2 == 'HD_1Terabyte' %}selected{% endif %}>HD_1Terabyte</option>
+            <option value="Fonte_480W" {% if registro.peca_utilizada2 == 'Fonte_480W' %}selected{% endif %}>Fonte_480W</option>
+            <option value="Cooler_Soquete_1150" {% if registro.peca_utilizada2 == 'Cooler_Soquete_1150' %}selected{% endif %}>Cooler_Soquete_1150</option>
+            <option value="Cooler_Soquete_AM4" {% if registro.peca_utilizada2 == 'Cooler_Soquete_AM4' %}selected{% endif %}>Cooler_Soquete_AM4</option>
+            <option value="Placa_de_Rede_1150" {% if registro.peca_utilizada2 == 'Placa_de_Rede_1150' %}selected{% endif %}>Placa_de_Rede_1150</option>
+            <option value="Placa_de_Rede_AM4" {% if registro.peca_utilizada2 == 'Placa_de_Rede_AM4' %}selected{% endif %}>Placa_de_Rede_AM4</option>
+            <option value="Teclado" {% if registro.peca_utilizada2 == 'Teclado' %}selected{% endif %}>Teclado</option>
+            <option value="Mouse" {% if registro.peca_utilizada2 == 'Mouse' %}selected{% endif %}>Mouse</option>
+            <option value="Monitor" {% if registro.peca_utilizada2 == 'Monitor' %}selected{% endif %}>Monitor</option>
+            <option value="Cabo_VGA" {% if registro.peca_utilizada2 == 'Cabo_VGA' %}selected{% endif %}>Cabo_VGA</option>
+            <option value="Cabo_HDMI" {% if registro.peca_utilizada2 == 'Cabo_HDMI' %}selected{% endif %}>Cabo_HDMI</option>
+            <option value="Cabo_de_Força" {% if registro.peca_utilizada2 == 'Cabo_de_Força' %}selected{% endif %}>Cabo_de_Força</option>
+        </select><br>
+       
+        <label for="quantidade2">Quantidade ou Serial 2:</label>
+        <input type="text" id="quantidade2" name="quantidade2" value="{{ registro.quantidade2 }}" >
+
+        <label for="peca_utilizada3">Peça que Utilizou 3:</label>
+        <select id="peca_utilizada3" name="peca_utilizada3">
+            <option value=""></option>
+            <option value="Placa-mae" {% if registro.peca_utilizada3 == 'Placa-mae' %}selected{% endif %}>Placa-mãe</option>
+            <option value="Processador_I5_4400" {% if registro.peca_utilizada3 == 'Processador_I5_4400' %}selected{% endif %}>Processador_I5_4400</option>
+            <option value="Processador_Ryzen_5_3400G" {% if registro.peca_utilizada3 == 'Processador_Ryzen_5_3400G' %}selected{% endif %}>Processador_Ryzen_5_3400G</option>
+            <option value="Processador_Petium_Gold_460" {% if registro.peca_utilizada3 == 'Processador_Petium_Gold_460' %}selected{% endif %}>Processador_Petium_Gold_460</option>
+            <option value="Memoria-Ram_DDR3_2GB" {% if registro.peca_utilizada3 == 'Memoria-Ram_DDR3_2GB' %}selected{% endif %}>Memoria-Ram_DDR3_2GB</option>
+            <option value="Memoria-Ram_DDR3_4GB" {% if registro.peca_utilizada3 == 'Memoria-Ram_DDR3_4GB' %}selected{% endif %}>Memoria-Ram_DDR3_4GB</option>
+            <option value="Memoria-Ram_DDR3_8GB" {% if registro.peca_utilizada3 == 'Memoria-Ram_DDR3_8GB' %}selected{% endif %}>Memoria-Ram_DDR3_8GB</option>
+            <option value="Memoria-Ram_DDR4_4GB" {% if registro.peca_utilizada3 == 'Memoria-Ram_DDR4_4GB' %}selected{% endif %}>Memoria-Ram_DDR4_4GB</option>
+            <option value="Memoria-Ram_DDR4_8GB" {% if registro.peca_utilizada3 == 'Memoria-Ram_DDR4_8GB' %}selected{% endif %}>Memoria-Ram_DDR4_8GB</option>
+            <option value="SSD_120GB" {% if registro.peca_utilizada3 == 'SSD_120GB' %}selected{% endif %}>SSD_120GB</option>
+            <option value="SSD_240GB" {% if registro.peca_utilizada3 == 'SSD_240GB' %}selected{% endif %}>SSD_240GB</option>
+            <option value="SSD_480GB" {% if registro.peca_utilizada3 == 'SSD_480GB' %}selected{% endif %}>SSD_480GB</option>
+            <option value="SSD_NVME_120GB" {% if registro.peca_utilizada3 == 'SSD_NVME_120GB' %}selected{% endif %}>SSD_NVME_120GB</option>
+            <option value="SSD_NVME_240GB" {% if registro.peca_utilizada3 == 'SSD_NVME_240GB' %}selected{% endif %}>SSD_NVME_240GB</option>
+            <option value="SSD_NVSSD_NVME_480GBME_240GB" {% if registro.peca_utilizada3 == 'SSD_NVME_480GB' %}selected{% endif %}>SSD_NVME_480GB</option>
+            <option value="HD_320GB" {% if registro.peca_utilizada3 == 'HD_320GB' %}selected{% endif %}>HD_320GB</option>
+            <option value="HD_500GB" {% if registro.peca_utilizada3 == 'HD_500GB' %}selected{% endif %}>HD_500GB</option>
+            <option value="HD_700GB" {% if registro.peca_utilizada3 == 'HD_700GB' %}selected{% endif %}>HD_700GB</option>
+            <option value="HD_1Terabyte" {% if registro.peca_utilizada3 == 'HD_1Terabyte' %}selected{% endif %}>HD_1Terabyte</option>
+            <option value="Fonte_480W" {% if registro.peca_utilizada3 == 'Fonte_480W' %}selected{% endif %}>Fonte_480W</option>
+            <option value="Cooler_Soquete_1150" {% if registro.peca_utilizada3 == 'Cooler_Soquete_1150' %}selected{% endif %}>Cooler_Soquete_1150</option>
+            <option value="Cooler_Soquete_AM4" {% if registro.peca_utilizada3 == 'Cooler_Soquete_AM4' %}selected{% endif %}>Cooler_Soquete_AM4</option>
+            <option value="Placa_de_Rede_1150" {% if registro.peca_utilizada3 == 'Placa_de_Rede_1150' %}selected{% endif %}>Placa_de_Rede_1150</option>
+            <option value="Placa_de_Rede_AM4" {% if registro.peca_utilizada3 == 'Placa_de_Rede_AM4' %}selected{% endif %}>Placa_de_Rede_AM4</option>
+            <option value="Teclado" {% if registro.peca_utilizada3 == 'Teclado' %}selected{% endif %}>Teclado</option>
+            <option value="Mouse" {% if registro.peca_utilizada3 == 'Mouse' %}selected{% endif %}>Mouse</option>
+            <option value="Monitor" {% if registro.peca_utilizada3 == 'Monitor' %}selected{% endif %}>Monitor</option>
+            <option value="Cabo_VGA" {% if registro.peca_utilizada3 == 'Cabo_VGA' %}selected{% endif %}>Cabo_VGA</option>
+            <option value="Cabo_HDMI" {% if registro.peca_utilizada3 == 'Cabo_HDMI' %}selected{% endif %}>Cabo_HDMI</option>
+            <option value="Cabo_de_Força" {% if registro.peca_utilizada3 == 'Cabo_de_Força' %}selected{% endif %}>Cabo_de_Força</option>
+        </select><br>
+       
+        <label for="quantidade3">Quantidade ou Serial 3:</label>
+        <input type="text" id="quantidade3" name="quantidade3" value="{{ registro.quantidade3 }}" > 
+
+        <label for="peca_utilizada4">Peça que Utilizou 4:</label>
+        <select id="peca_utilizada4" name="peca_utilizada4">
+            <option value=""></option>
+            <option value="Placa-mae" {% if registro.peca_utilizada4 == 'Placa-mae' %}selected{% endif %}>Placa-mãe</option>
+            <option value="Processador_I5_4400" {% if registro.peca_utilizada4 == 'Processador_I5_4400' %}selected{% endif %}>Processador_I5_4400</option>
+            <option value="Processador_Ryzen_5_3400G" {% if registro.peca_utilizada4 == 'Processador_Ryzen_5_3400G' %}selected{% endif %}>Processador_Ryzen_5_3400G</option>
+            <option value="Processador_Petium_Gold_460" {% if registro.peca_utilizada4 == 'Processador_Petium_Gold_460' %}selected{% endif %}>Processador_Petium_Gold_460</option>
+            <option value="Memoria-Ram_DDR3_2GB" {% if registro.peca_utilizada4 == 'Memoria-Ram_DDR3_2GB' %}selected{% endif %}>Memoria-Ram_DDR3_2GB</option>
+            <option value="Memoria-Ram_DDR3_4GB" {% if registro.peca_utilizada4 == 'Memoria-Ram_DDR3_4GB' %}selected{% endif %}>Memoria-Ram_DDR3_4GB</option>
+            <option value="Memoria-Ram_DDR3_8GB" {% if registro.peca_utilizada4 == 'Memoria-Ram_DDR3_8GB' %}selected{% endif %}>Memoria-Ram_DDR3_8GB</option>
+            <option value="Memoria-Ram_DDR4_4GB" {% if registro.peca_utilizada4 == 'Memoria-Ram_DDR4_4GB' %}selected{% endif %}>Memoria-Ram_DDR4_4GB</option>
+            <option value="Memoria-Ram_DDR4_8GB" {% if registro.peca_utilizada4 == 'Memoria-Ram_DDR4_8GB' %}selected{% endif %}>Memoria-Ram_DDR4_8GB</option>
+            <option value="SSD_120GB" {% if registro.peca_utilizada4 == 'SSD_120GB' %}selected{% endif %}>SSD_120GB</option>
+            <option value="SSD_240GB" {% if registro.peca_utilizada4 == 'SSD_240GB' %}selected{% endif %}>SSD_240GB</option>
+            <option value="SSD_480GB" {% if registro.peca_utilizada4 == 'SSD_480GB' %}selected{% endif %}>SSD_480GB</option>
+            <option value="SSD_NVME_120GB" {% if registro.peca_utilizada4 == 'SSD_NVME_120GB' %}selected{% endif %}>SSD_NVME_120GB</option>
+            <option value="SSD_NVME_240GB" {% if registro.peca_utilizada4 == 'SSD_NVME_240GB' %}selected{% endif %}>SSD_NVME_240GB</option>
+            <option value="SSD_NVSSD_NVME_480GBME_240GB" {% if registro.peca_utilizada4 == 'SSD_NVME_480GB' %}selected{% endif %}>SSD_NVME_480GB</option>
+            <option value="HD_320GB" {% if registro.peca_utilizada4 == 'HD_320GB' %}selected{% endif %}>HD_320GB</option>
+            <option value="HD_500GB" {% if registro.peca_utilizada4 == 'HD_500GB' %}selected{% endif %}>HD_500GB</option>
+            <option value="HD_700GB" {% if registro.peca_utilizada4 == 'HD_700GB' %}selected{% endif %}>HD_700GB</option>
+            <option value="HD_1Terabyte" {% if registro.peca_utilizada4 == 'HD_1Terabyte' %}selected{% endif %}>HD_1Terabyte</option>
+            <option value="Fonte_480W" {% if registro.peca_utilizada4 == 'Fonte_480W' %}selected{% endif %}>Fonte_480W</option>
+            <option value="Cooler_Soquete_1150" {% if registro.peca_utilizada4 == 'Cooler_Soquete_1150' %}selected{% endif %}>Cooler_Soquete_1150</option>
+            <option value="Cooler_Soquete_AM4" {% if registro.peca_utilizada4 == 'Cooler_Soquete_AM4' %}selected{% endif %}>Cooler_Soquete_AM4</option>
+            <option value="Placa_de_Rede_1150" {% if registro.peca_utilizada4 == 'Placa_de_Rede_1150' %}selected{% endif %}>Placa_de_Rede_1150</option>
+            <option value="Placa_de_Rede_AM4" {% if registro.peca_utilizada4 == 'Placa_de_Rede_AM4' %}selected{% endif %}>Placa_de_Rede_AM4</option>
+            <option value="Teclado" {% if registro.peca_utilizada4 == 'Teclado' %}selected{% endif %}>Teclado</option>
+            <option value="Mouse" {% if registro.peca_utilizada4 == 'Mouse' %}selected{% endif %}>Mouse</option>
+            <option value="Monitor" {% if registro.peca_utilizada4 == 'Monitor' %}selected{% endif %}>Monitor</option>
+            <option value="Cabo_VGA" {% if registro.peca_utilizada4 == 'Cabo_VGA' %}selected{% endif %}>Cabo_VGA</option>
+            <option value="Cabo_HDMI" {% if registro.peca_utilizada4 == 'Cabo_HDMI' %}selected{% endif %}>Cabo_HDMI</option>
+            <option value="Cabo_de_Força" {% if registro.peca_utilizada4 == 'Cabo_de_Força' %}selected{% endif %}>Cabo_de_Força</option>
+        </select><br>
+       
+        <label for="quantidade4">Quantidade ou Serial 4:</label>
+        <input type="text" id="quantidade4" name="quantidade4" value="{{ registro.quantidade4 }}" >
+
+
+        <label for="status">Status:</label>
+        <select id="status" name="status">
+            <option value="Testando" {% if registro.status == 'Testando' %}selected{% endif %}>Testando</option>
+            <option value="Defeito" {% if registro.status == 'Defeito' %}selected{% endif %}>Defeito</option>
+            <option value="Solucionado" {% if registro.status == 'Solucionado' %}selected{% endif %}>Solucionado</option>
+            <option value="Substituído" {% if registro.status == 'Substituído' %}selected{% endif %}>Substituído</option>
+        </select>
+        <br>
+
+        <label for="data_saida">Data de Saída:</label>
+        <input type="date" id="data_saida" name="data_saida" value="{{ registro.data_saida }}">
+        <br>
+
+        <input type="submit" value="Salvar">
+    </form>
+</body>
+</html>

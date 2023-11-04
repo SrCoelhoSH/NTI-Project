@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard com Dados em Tempo Real</title>
+    <!-- Inclua a biblioteca Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        canvas {
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dashboard com Dados em Tempo Real</h1>
+        <canvas id="pecas-utilizadas-chart" width="400" height="200"></canvas>
+        <canvas id="pecas-em-lote-chart" width="400" height="200"></canvas>
+        <canvas id="maquinas-em-manutencao-chart" width="400" height="200"></canvas>
+        <canvas id="aguardando-peca-chart" width="400" height="200"></canvas>
+        <canvas id="devolvidas-chart" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+        // Gerar dados fictícios para os gráficos
+        function generateData() {
+            return Math.floor(Math.random() * 100); // Número aleatório entre 0 e 100
+        }
+
+        // Configuração inicial dos gráficos
+        const chartOptions = {
+            type: "bar",
+            data: {
+                labels: ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"],
+                datasets: [{
+                    label: "Valor",
+                    backgroundColor: "rgba(75, 192, 192, 0.2)",
+                    borderColor: "rgb(75, 192, 192)",
+                    borderWidth: 1,
+                    data: [],
+                }],
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                    },
+                },
+            },
+        };
+
+        const pecasUtilizadasChart = new Chart(document.getElementById("pecas-utilizadas-chart").getContext("2d"), chartOptions);
+        const pecasEmLoteChart = new Chart(document.getElementById("pecas-em-lote-chart").getContext("2d"), chartOptions);
+        const maquinasEmManutencaoChart = new Chart(document.getElementById("maquinas-em-manutencao-chart").getContext("2d"), chartOptions);
+        const aguardandoPecaChart = new Chart(document.getElementById("aguardando-peca-chart").getContext("2d"), chartOptions);
+        const devolvidasChart = new Chart(document.getElementById("devolvidas-chart").getContext("2d"), chartOptions);
+
+        // Atualizar os gráficos a cada 2 segundos com dados fictícios
+        setInterval(() => {
+            const newData = generateData();
+            pecasUtilizadasChart.data.datasets[0].data = [newData, newData, newData, newData, newData];
+            pecasEmLoteChart.data.datasets[0].data = [newData, newData, newData, newData, newData];
+            maquinasEmManutencaoChart.data.datasets[0].data = [newData, newData, newData, newData, newData];
+            aguardandoPecaChart.data.datasets[0].data = [newData, newData, newData, newData, newData];
+            devolvidasChart.data.datasets[0].data = [newData, newData, newData, newData, newData];
+            pecasUtilizadasChart.update();
+            pecasEmLoteChart.update();
+            maquinasEmManutencaoChart.update();
+            aguardandoPecaChart.update();
+            devolvidasChart.update();
+        }, 2000); // Atualizar a cada 2 segundos
+    </script>
+</body>
+</html>

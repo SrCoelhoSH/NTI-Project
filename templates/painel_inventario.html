@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Iventario</title>
+    <style>
+        body {
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+            margin: 10px;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        form input[type="date"],
+        form input[type="text"],
+        form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        form input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        /* Styles for the select element */
+        .table-size-select {
+            display: block;
+            width: 100px;
+            margin: 10px auto;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        /* Responsiveness for smaller screens */
+        @media screen and (max-width: 600px) {
+            form input[type="date"],
+            form input[type="text"],
+            form select {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+            .table-size-select {
+                width: 100%;
+                margin: 10px 0;
+            }
+
+            table {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        
+        <a class="button" href="/painel_inicial">Início</a>
+    </div>
+    <div class="container">
+        <div class="form-container hidden" id="formContainer">
+            <form method="post">
+    
+            
+        
+                <label for="tombo">Tombo:</label>
+                <input type="text" id="tombo" name="tombo"><br><br>
+                
+                <label for="serie">Número de Série:</label>
+                <input type="text" id="serie" name="serie"><br><br>
+                
+                <label for="equipamento">Tipo de Item:</label>
+                <select id="item_type" name="equipamento">
+                   
+                    <option value="Monitor">Monitor</option>
+                    <option value="CPU">CPU</option>
+                    <option value="Impressora">CPU</option>
+                    <option value="Switch">CPU</option>
+                    
+               </select><br><br>
+                
+                <label for="setor">Setor:</label>
+                <input type="text" id="setor" name="setor"><br><br>
+
+                <label for="data">Data:</label>
+                <input type="date" id="data" name="data"><br><br>
+                
+            
+                <input type="submit" value="Registrar">
+            </form>
+        </div>
+        <div class="table-container">
+            <table border="1">
+                <tr>
+                    <th>tombo</th>
+                    <th>Serie de Item</th>
+                    <th>Equipamento</th>
+                    <th>Setor</th>
+                    <th>Data</th>
+                    
+                </tr>
+                <!-- Exibição dos itens -->
+                {% for item in inventario_lista %}
+                <tr>                    
+                    <td>{{ item.tombo }}</td>
+                    <td>{{ item.serie }}</td>
+                    <td>{{ item.equipamento }}</td>
+                    <td>{{ item.setor }}</td>
+                    <td>{{ item.data }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const showFormBtn = document.getElementById('showFormBtn');
+        const formContainer = document.getElementById('formContainer');
+
+        showFormBtn.addEventListener('click', function () {
+            if (formContainer.classList.contains('hidden')) {
+                formContainer.classList.remove('hidden');
+                formContainer.classList.add('visible');
+                showFormBtn.textContent = 'Recolher Formulário';
+            } else {
+                formContainer.classList.remove('visible');
+                formContainer.classList.add('hidden');
+                showFormBtn.textContent = 'Registrar Estoque';
+            }
+        });
+    </script>
+</body>
+</html>

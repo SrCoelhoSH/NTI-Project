@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Painel de Manutenção</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+    <style>
+        body {
+            background: linear-gradient(to bottom, #f0f0f0, #e1e1e1);
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Style for the button */
+        .button {
+            display: inline-block;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Hover effect for the button */
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Painel de Manutenção</h1>
+    <a href="/painel_inicial">Voltar para tela inicial</a>
+
+    <!-- Formulário de busca -->
+    <form id="search-form">
+        <label for="search-setor">Setor:</label>
+        <input type="text" id="search-setor" name="setor">
+
+        <label for="data-inicial">Data Inicial:</label>
+        <input type="date" id="data-inicial" name="data_inicial">
+
+        <label for="data-final">Data Final:</label>
+        <input type="date" id="data-final" name="data_final">
+
+        <button type="submit" class="button">Buscar</button>
+    </form>
+
+    <!-- Botão "Exibir tudo" -->
+    <button class="button" onclick="exibirTudo()">Exibir tudo</button>
+
+    <!-- Botão "Gerar Relatório" -->
+    <button class="button" onclick="gerarRelatorio()">Gerar Relatório</button>
+
+    <table id="table">
+        <tr>
+            <th>Data de Entrada</th>
+            <th>Tombo</th>
+            <th>Série</th>
+            <th>Setor</th>
+            <th>Técnico Responsável</th>
+            <th>Descrição</th>
+            <th>Peça Utilizada1</th>
+            <th>Peça Q/S 1</th>
+            <th>Peça Utilizada2</th>
+            <th>Peça Q/S 2</th>
+            <th>Peça Utilizada3</th>
+            <th>Peça Q/S 3</th>
+            <th>Peça Utilizada4</th>
+            <th>Peça Q/S 4</th>
+            <th>Status</th>
+            <th>Data de Saída</th>
+        </tr>
+
+        <!-- Dados da tabela (substitua com seus dados reais) -->
+        <!-- Substitua este bloco com os dados reais -->
+        {% for item in estoque %}
+        <tr>
+            <td>{{ item.data_entrada }}</td>
+            <td>{{ item.tombo }}</td>
+            <td>{{ item.serie }}</td>
+            <td>{{ item.setor }}</td>
+            <td>{{ item.tecnico_responsavel }}</td>
+            <td>{{ item.descricao }}</td>
+            <td>{{ item.peca_utilizada1 }}</td>
+            <td>{{ item.quantidade1 }}</td>
+            <td>{{ item.peca_utilizada2 }}</td>
+            <td>{{ item.quantidade2 }}</td>
+            <td>{{ item.peca_utilizada3 }}</td>
+            <td>{{ item.quantidade3 }}</td>
+            <td>{{ item.peca_utilizada4 }}</td>
+            <td>{{ item.quantidade4 }}</td>
+            <td>{{ item.status }}</td>
+            <td>{{ item.data_saida }}</td>
+        </tr>
+        {% endfor %}
+        <!-- Fim dos dados da tabela -->
+
+    </table>
+
+    <!-- Script para filtrar os dados com base na busca -->
+    <script>
+        document.getElementById('search-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const setor = document.getElementById('search-setor').value;
+            const dataInicial = document.getElementById('data-inicial').value;
+            const dataFinal = document.getElementById('data-final').value;
+            filterTable(setor, dataInicial, dataFinal);
+        });
+    
+        function filterTable(setor, dataInicial, dataFinal) {
+            const rows = document.querySelectorAll('#table tr'); // Altere para #table
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                const dataEntradaCell = row.cells[0];
+                const setorCell = row.cells[3];
+                const dataEntrada = dataEntradaCell.textContent;
+    
+                const showRow = (setor === '' || setorCell.textContent.includes(setor)) &&
+                                (dataInicial === '' || dataEntrada >= dataInicial) &&
+                                (dataFinal === '' || dataEntrada <= dataFinal);
+                row.style.display = showRow ? 'table-row' : 'none';
+            }
+        }
+    
+        // Função para exibir todas as linhas da tabela novamente
+        function exibirTudo() {
+            const rows = document.querySelectorAll('#table tr'); // Altere para #table
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                row.style.display = 'table-row';
+            }
+        }
+    
+        // Função para gerar o relatório em formato XLSX
+        function gerarRelatorio() {
+            // Verifique se a biblioteca XLSX está disponível
+            if (typeof XLSX !== 'undefined') {
+                const setor = document.getElementById('search-setor').value;
+                const dataInicial = document.getElementById('data-inicial').value;
+                const dataFinal = document.getElementById('data-final').value;
+    
+                const filteredData = [];
+    
+                // Filtrar os dados com base no período e setor
+                const rows = document.querySelectorAll('#table tr'); // Altere para #table
+                for (let i = 1; i < rows.length; i++) {
+                    const row = rows[i];
+                    const dataEntradaCell = row.cells[0];
+                    const setorCell = row.cells[3];
+                    const dataEntrada = dataEntradaCell.textContent;
+    
+                    const showRow = (setor === '' || setorCell.textContent.includes(setor)) &&
+                                    (dataInicial === '' || dataEntrada >= dataInicial) &&
+                                    (dataFinal === '' || dataEntrada <= dataFinal);
+    
+                    if (showRow) {
+                        filteredData.push(Array.from(row.cells).map(cell => cell.textContent));
+                    }
+                }
+    
+                if (filteredData.length === 0) {
+                    alert("Nenhum dado disponível para o relatório.");
+                    return;
+                }
+    
+                // Criar um objeto de workbook do Excel
+                const wb = XLSX.utils.book_new();
+                const ws = XLSX.utils.aoa_to_sheet([['Data de Entrada', 'Tombo', 'Série', 'Setor', 'Técnico Responsável', 'Descrição', 'Peça Utilizada1', 'Peça Q/S 1', 'Peça Utilizada2', 'Peça Q/S 2', 'Peça Utilizada3', 'Peça Q/S 3', 'Peça Utilizada4', 'Peça Q/S 4', 'Status', 'Data de Saída']].concat(filteredData));
+    
+                // Adicionar a planilha ao workbook
+                XLSX.utils.book_append_sheet(wb, ws, 'Relatório de Manutenção');
+    
+                // Gerar o arquivo XLSX
+                XLSX.writeFile(wb, 'relatorio_manutencao.xlsx');
+            } else {
+                alert("A biblioteca XLSX não está carregada. Verifique se o script dela está importado corretamente.");
+            }
+        }
+    </script>
+</body>
+</html>

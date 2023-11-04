@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulario de Registro Teclado e Mouse</title>
+    <style>
+        body {
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+            margin: 10px;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 80%;
+            margin: 0 auto;
+            }
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        form input[type="date"],
+        form input[type="text"],
+        form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        form input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 20px 25px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+
+        /* Styles for the select element */
+        .table-size-select {
+            display: block;
+            width: 100px;
+            margin: 10px auto;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        /* Responsiveness for smaller screens */
+        @media screen and (max-width: 600px) {
+            form input[type="date"],
+            form input[type="text"],
+            form select {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+            .table-size-select {
+                width: 100%;
+                margin: 10px 0;
+            }
+
+            table {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        
+        <a class="button" href="/painel_inicial">Início</a>
+    </div>
+    <div class="container">
+        <div class="form-container hidden" id="formContainer">
+            <form method="post">
+    
+                <label for="tecnico_responsavel">Técnico Responsável:</label>
+                <input type="text" id="tecnico_responsavel" name="tecnico_responsavel" value="{{ session['username'] }}" readonly required>
+        
+                <label for="item_type">Tipo do ITem:</label>
+                <select id="item_type" name="item_type">
+                   
+                    <option value="Teclado">Teclado</option>
+                    <option value="Mouse">Mouse</option>
+                <select>    
+                
+                <label for="item_quantity">Quantidade:</label>
+                <input type="number" id="item_quantity" name="item_quantity"><br><br>
+                
+                <label for="item_requerente">Solicitante (Nome da Pessoa e Setor):</label>
+                <input type="text" id="item_requerente" name="item_requerente"><br><br>
+                   
+                  
+                
+                <label for="lote_text">Lote (Data que esta composta na caixa ou Número da Notafiscal):</label>
+                <input type="text" id="lote_text" name="lote_text"><br><br>
+
+                <label for="data_abriu">Data da Solicitação:</label>
+                <input type="date" id="data_abriu" name="data_abriu"><br><br>
+                
+                <label for="data_fechou">Data da Entrega:</label>
+                <input type="date" id="data_fechou" name="data_fechou"><br><br>
+            
+                <input type="submit" value="Registrar">
+            </form>
+        </div>
+        <div class="table-container">
+            <table border="1">
+                <tr>
+                    <th>Profissional</th>
+                    <th>Tipo do Item</th>
+                    <th>Quantidade</th>
+                    <th>Solicitante</th>
+                    <th>Lote Data/Notafiscal</th>
+                    <th>Data da Solicitação</th>
+                    <th>Data da Entrega</th>
+                    
+                </tr>
+                <!-- Exibição dos itens -->
+                {% for item in itens %}
+                <tr>
+                    <td>{{ item['tecnico_responsavel'] }}</td>
+                    <td>{{ item['item_type'] }}</td>
+                    <td>{{ item['item_quantity'] }}</td>
+                    <td>{{ item['item_requerente'] }}</td>
+                    <td>{{ item['lote_text'] }}</td>
+                    <td>{{ item['data_abriu'] }}</td>
+                    <td>{{ item['data_fechou'] }}</td>
+                    
+                    <td>
+                        
+        
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const showFormBtn = document.getElementById('showFormBtn');
+        const formContainer = document.getElementById('formContainer');
+
+        showFormBtn.addEventListener('click', function () {
+            if (formContainer.classList.contains('hidden')) {
+                formContainer.classList.remove('hidden');
+                formContainer.classList.add('visible');
+                showFormBtn.textContent = 'Recolher Formulário';
+            } else {
+                formContainer.classList.remove('visible');
+                formContainer.classList.add('hidden');
+                showFormBtn.textContent = 'Registrar ';
+            }
+        });
+    </script>
+</body>
+</html>
